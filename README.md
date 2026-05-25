@@ -11,3 +11,16 @@ Local layout:
 
 - `../dataset/host_logs.parquet`
 - `../dataset/ground_truth.parquet`
+
+Baseline modeling table build:
+
+```bash
+.venv/bin/python scripts/build_baseline_modeling_table.py --overwrite
+```
+
+Default output:
+
+- `dataset/modeling_baseline/train.parquet`
+- `dataset/modeling_baseline/validation.parquet`
+- `dataset/modeling_baseline/test.parquet`
+- `dataset/modeling_baseline/metadata.json`

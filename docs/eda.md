@@ -53,25 +53,7 @@ Outputs:
 - Data quality summary
 - List of columns needing cleanup, recoding, or exclusion
 
-## Phase 3: Host Log Structure
-
-Objective: understand how activity is distributed across processes, paths, and identifiers.
-
-Tasks:
-
-- Profile top values for each categorical column
-- Measure distinct counts for pid-like, ppid-like, path-like, and label-like columns
-- Inspect the most common processes and paths
-- Identify rare processes and rare paths
-- Check whether the same process/path combinations recur over time
-- Look for columns that may directly encode normal vs anomalous behavior
-
-Outputs:
-
-- Top-k distributions for key columns
-- Notes on which columns are likely useful for behavioral modeling
-
-## Phase 4: Label And Ground Truth Audit
+## Phase 3: Label And Ground Truth Audit
 
 Objective: understand how anomalies are represented and how ground truth should be used.
 
@@ -90,42 +72,29 @@ Outputs:
 - Clear statement of how labels should be sourced for modeling
 - List of unresolved alignment assumptions
 
-## Phase 5: Temporal Analysis
+## Phase 4: Host Log Temporal And Entity Profiling
 
-Objective: understand event volume and anomaly behavior over time.
+Objective: understand when anomalies occur and how they concentrate across host-log entities.
 
 Tasks:
 
+- Check class balance in `host_logs.parquet`
 - Plot event counts by day and hour
 - Plot anomaly counts and anomaly rate over time
-- Look for burst periods, outages, or drift
 - Check whether certain dates or hours dominate the anomalies
-- Compare normal and anomalous periods if labels are available
+- Profile top values for `path`, `sys_call`, and `pro_id`
+- Compare anomaly concentration by executable path
+- Inspect `path x sys_call` combinations
+- Identify rare or unseen entities
+- Flag shortcuts that could dominate a random-split evaluation
 
 Outputs:
 
 - Time-series summaries
-- Notes on drift, burstiness, and temporal segmentation needs
+- Top-k entity distributions
+- Notes on burstiness, shortcut risk, and behavioral signals
 
-## Phase 6: Entity And Behavioral Analysis
-
-Objective: identify behavior patterns that can separate normal from anomalous activity.
-
-Tasks:
-
-- Compare anomaly rate by process, parent process, and path
-- Inspect process-path and parent-child combinations
-- Measure event frequency per pid and per ppid
-- Identify rare or unseen entities
-- Look for suspicious concentrations around specific executables or paths
-- Examine local sequence context around anomalous rows if feasible
-
-Outputs:
-
-- Candidate behavioral signals
-- Shortlist of entities and combinations worth modeling
-
-## Phase 7: Feature Readiness
+## Phase 5: Feature Readiness
 
 Objective: turn EDA findings into a modeling plan.
 
@@ -138,16 +107,18 @@ Tasks:
   - event frequency features
   - path rarity features
   - process/path interaction features
-  - parent-child relationship features
+  - path/syscall interaction features
   - rolling or windowed count features
+  - per-process aggregate features
 - Mark columns to exclude because of leakage or low value
+- Recommend a train/validation/test split strategy that respects temporal structure
 
 Outputs:
 
 - Modeling-ready feature shortlist
 - Exclusion list with reasons
 
-## Phase 8: Visualization Pack
+## Phase 6: Visualization Pack
 
 Objective: produce a compact set of visuals that summarize the dataset.
 
@@ -166,9 +137,8 @@ Recommended visuals:
 1. Confirm schema and types
 2. Validate data quality
 3. Audit labels and ground truth relationship
-4. Analyze temporal behavior
-5. Analyze entities and interactions
-6. Produce feature shortlist
+4. Analyze temporal and entity-level host behavior
+5. Produce the feature shortlist and split strategy
 
 ## Suggested Deliverables
 
