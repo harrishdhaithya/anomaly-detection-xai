@@ -5,7 +5,7 @@ Date range: May 18, 2026 to July 20, 2026
 
 ## Timeline
 
-### May 18 to May 30
+### May 18 to May 31
 
 EDA, Data Cleaning and Feature Engineering
 

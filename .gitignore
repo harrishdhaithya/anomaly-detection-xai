@@ -221,3 +221,6 @@ __marimo__/
 dataset/*.parquet
 dataset/*.csv
 dataset/modeling_baseline/
+dataset/lstm_sequences/
+dataset/lstm_model/
+/dataset/raw_backup/
