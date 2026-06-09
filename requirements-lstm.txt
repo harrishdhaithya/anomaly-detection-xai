@@ -2,4 +2,6 @@ duckdb
 numpy
 pandas
 scikit-learn
-tensorflow
+shap
+lime
+tensorflow==2.20.0
