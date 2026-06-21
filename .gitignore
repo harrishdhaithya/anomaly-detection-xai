@@ -223,4 +223,5 @@ dataset/*.csv
 dataset/modeling_baseline/
 dataset/lstm_sequences/
 dataset/lstm_model/
+dataset/lstm_v2/
 /dataset/raw_backup/
